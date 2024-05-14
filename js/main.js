@@ -1,64 +1,72 @@
+// Seleccionar los elementos canvas y obtener su contexto
 const canvasOOP = document.getElementById("canvasOOP");
 const ctx = canvasOOP.getContext("2d");
 
-//Se ajusta el tamaño de la ventana. 
-const window_height = window.innerHeight;
+const canvasOOP2 = document.getElementById("canvasOOP2");
+const ctx2 = canvasOOP2.getContext("2d");
 
-const window_width = window.innerWidth;
+const canvasOOP3 = document.getElementById("canvasOOP3");
+const ctx3 = canvasOOP3.getContext("2d");
 
-//Se ajusta el tamaño del canvas 
-canvasOOP.height = "200";
-canvasOOP.width = "300";
+// Se ajusta el tamaño de los canvas
+canvasOOP.width = canvasOOP2.width = canvasOOP3.width= 300;
+canvasOOP.height = canvasOOP2.height = canvasOOP3.height= 200;
 
 //Color de fondo
 canvasOOP.style.background = "#95C2FA";
+canvasOOP2.style.background = "#CBABFC";
+canvasOOP3.style.background = "#80FE84";
 
-//Clase
+// Se define una clase para los círculos
 class Circle {
-    //Constructor que carga los valores predeterminados del objeto
-    constructor(x, y, radius, color, text) {
-        //Posición del círculo
+    constructor(x, y, radius, text, color, background) {
         this.posX = x;
         this.posY = y;
-        //Tamaño
         this.radius = radius;
-        //Color
-        this.color = color;
-        //Texto
         this.text = text;
+        this.color = color;
+        this.background = background;
     }
 
-    //Método para redenrizar el objeto
     draw(context) {
-        //Se inicia el objeto
         context.beginPath();
-        
+        context.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2, false);
+        context.fillStyle = this.background;
+        context.fill();
+
         context.strokeStyle = this.color;
-        //Alineación horizontal del texto
-        context.textAlign = "center";
-        //Alineación vertical del texto
-        context.textBaseline = "middle";
-
-        context.font = "27px Times New Roman";
-        //Renderiza el texto en el centro del objeto
-        context.fillText(this.text, this.posX, this.posY);
-
-        //Ancho de la línea
         context.lineWidth = 3;
-        
-        context.arc(this.posX, this.posY, this.radius, 0, Math.PI*2, false);
-
         context.stroke();
 
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.font = "27px Times New Roman";
+        context.fillStyle = this.color;
+        context.fillText(this.text, this.posX, this.posY);
         context.closePath();
-
     }
-
 }
 
-
-let miCirculo = new Circle(canvasOOP.width/2, canvasOOP.height/2, 50, 'white', 'Tec');
-
+// Crear instancias de círculos y dibujarlos
+const miCirculo = new Circle(canvasOOP.width / 2, canvasOOP.height / 2, 50, 'Tec', 'navy', 'white');
 miCirculo.draw(ctx);
 
+//Dimensiones aleatorias
+const randomX = Math.random() * canvasOOP2.width;
+const randomY = Math.random() * canvasOOP2.height;
+const randomRadius = Math.floor(Math.random() * 50 + 30);
+const miCirculo2 = new Circle(randomX, randomY, randomRadius, 'Tec', '#6A40AB', 'white');
+miCirculo2.draw(ctx2);
 
+
+let arrayCircle=[];
+//Multiobjetos
+for (let i = 0; i < 10; i++) {
+    let randomX = Math.random() * canvasOOP3.width;
+    let randomY = Math.random() * canvasOOP3.height;
+    let randomRadius = Math.floor(Math.random() * 10 + 30);
+
+    let miCirculo3 = new Circle(randomX, randomY, randomRadius, i + 1, '#42D547','white');  
+    arrayCircle.push(miCirculo3);
+    arrayCircle[i].draw(ctx3);
+}
