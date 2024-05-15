@@ -59,14 +59,26 @@ const miCirculo2 = new Circle(randomX, randomY, randomRadius, 'Tec', '#6A40AB', 
 miCirculo2.draw(ctx2);
 
 
-let arrayCircle=[];
-//Multiobjetos
-for (let i = 0; i < 10; i++) {
-    let randomX = Math.random() * canvasOOP3.width;
-    let randomY = Math.random() * canvasOOP3.height;
-    let randomRadius = Math.floor(Math.random() * 10 + 30);
+let arrayCircle = [];
 
-    let miCirculo3 = new Circle(randomX, randomY, randomRadius, i + 1, '#42D547','white');  
+for (let i = 0; i < 10; i++) {
+    //Radio aleatorio para el tamaño del círculo
+    let randomRadius = Math.floor(Math.random() * 10 + 30);
+    // Margen entre el borde del canvas y los círculos
+    let margin = 10; 
+    //Garantiza que al menos el radio completo del círculo (randomRadius*2) esté dentro del canvas en X, y dejando el margen para que no se encime en el borde
+    let maxX = canvasOOP3.width - randomRadius * 2 - margin * 1; 
+    //Garantiza que al menos el radio completo del círculo (randomRadius*2) esté dentro del canvas en Y, y dejando el margen para que no se encime en el borde
+    let maxY = canvasOOP3.height - randomRadius * 2 - margin * 1;
+    //Multiplica el valor aleatorio (0 a 1) por el máximo de X, asegurando un rango de coordenadas, 
+    //sumandole el radio para asegurar que no se salga el canvas y agregando el margen al borde
+    let randomX = Math.random() * maxX + randomRadius + margin; 
+    //Multiplica el valor aleatorio (0 a 1)  por el máximo de Y, asegurando un rango de coordenadas, 
+    //sumandole el radio para asegurar que no se salga el canvas y agregando el margen al borde
+    let randomY = Math.random() * maxY + randomRadius + margin;
+    //Se especifican los atributos del círculo 
+    let miCirculo3 = new Circle(randomX, randomY, randomRadius, i + 1, '#42D547', 'white');  
     arrayCircle.push(miCirculo3);
+    //Se dibujan los círculos
     arrayCircle[i].draw(ctx3);
 }
